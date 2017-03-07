@@ -93,6 +93,7 @@ type Entry struct {
 	next, prev, child, parent *Entry
 	// Priority is the numerical priority of the node
 	Priority float64
+	Value    interface{}
 }
 
 // EmptyHeapError fires when the heap is empty and an operation could
@@ -115,8 +116,8 @@ func (e NilError) Error() string {
 func NewFloatFibHeap() FloatingFibonacciHeap { return FloatingFibonacciHeap{nil, 0} }
 
 // Enqueue adds and element to the heap
-func (heap *FloatingFibonacciHeap) Enqueue(priority float64) *Entry {
-	singleton := newEntry(priority)
+func (heap *FloatingFibonacciHeap) Enqueue(value interface{}, priority float64) *Entry {
+	singleton := newEntry(value, priority)
 
 	// Merge singleton list with heap
 	heap.min = mergeLists(heap.min, singleton)
@@ -314,7 +315,7 @@ func (heap *FloatingFibonacciHeap) Merge(other *FloatingFibonacciHeap) (Floating
 // HELPER FUNCTIONS
 // ****************
 
-func newEntry(priority float64) *Entry {
+func newEntry(value interface{}, priority float64) *Entry {
 	result := new(Entry)
 	result.degree = 0
 	result.marked = false
@@ -323,6 +324,7 @@ func newEntry(priority float64) *Entry {
 	result.next = result
 	result.prev = result
 	result.Priority = priority
+	result.Value = value
 	return result
 }
 

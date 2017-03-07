@@ -123,10 +123,13 @@ var NumberSequenceMerged3And4Sorted = [...]float64{-9698248424.421888, -94396067
 	9011134545.052086, 9241165993.258648, 9453124863.59945, 9607469190.690144,
 	9896256282.896187, 9928066165.458393}
 
+var TestValue = 0
+
 func TestEnqueueDequeueMin(t *testing.T) {
+
 	heap := NewFloatFibHeap()
 	for i := 0; i < len(NumberSequence1); i++ {
-		heap.Enqueue(NumberSequence1[i])
+		heap.Enqueue(TestValue, NumberSequence1[i])
 	}
 
 	var min *Entry
@@ -152,7 +155,7 @@ func TestEnqueueDequeueMin(t *testing.T) {
 func TestFibHeap_Enqueue_Min(t *testing.T) {
 	heap := NewFloatFibHeap()
 	for i := 0; i < len(NumberSequence1); i++ {
-		heap.Enqueue(NumberSequence1[i])
+		heap.Enqueue(TestValue, NumberSequence1[i])
 	}
 
 	min, err := heap.Min()
@@ -163,7 +166,7 @@ func TestFibHeap_Enqueue_Min(t *testing.T) {
 func TestFibHeap_Min_EmptyHeap(t *testing.T) {
 	heap := NewFloatFibHeap()
 
-	heap.Enqueue(0)
+	heap.Enqueue(TestValue, 0)
 	min, err := heap.DequeueMin()
 	require.NoError(t, err)
 
@@ -189,13 +192,13 @@ func TestEnqueueDecreaseKey(t *testing.T) {
 	var e1, e2, e3 *Entry
 	for i := 0; i < len(NumberSequence2); i++ {
 		if NumberSequence2[i] == Seq2DecreaseKey1Orig {
-			e1 = heap.Enqueue(NumberSequence2[i])
+			e1 = heap.Enqueue(TestValue, NumberSequence2[i])
 		} else if NumberSequence2[i] == Seq2DecreaseKey2Orig {
-			e2 = heap.Enqueue(NumberSequence2[i])
+			e2 = heap.Enqueue(TestValue, NumberSequence2[i])
 		} else if NumberSequence2[i] == Seq2DecreaseKey3Orig {
-			e3 = heap.Enqueue(NumberSequence2[i])
+			e3 = heap.Enqueue(TestValue, NumberSequence2[i])
 		} else {
-			heap.Enqueue(NumberSequence2[i])
+			heap.Enqueue(TestValue, NumberSequence2[i])
 		}
 	}
 
@@ -221,7 +224,7 @@ func TestEnqueueDecreaseKey(t *testing.T) {
 func TestFibHeap_DecreaseKey_EmptyHeap(t *testing.T) {
 	heap := NewFloatFibHeap()
 
-	elem := heap.Enqueue(15)
+	elem := heap.Enqueue(TestValue, 15)
 	heap.DequeueMin()
 
 	// Heap should be empty at this point
@@ -234,7 +237,7 @@ func TestFibHeap_DecreaseKey_EmptyHeap(t *testing.T) {
 
 func TestFibHeap_DecreaseKey_NilNode(t *testing.T) {
 	heap := NewFloatFibHeap()
-	heap.Enqueue(1)
+	heap.Enqueue(TestValue, 1)
 	min, err := heap.DecreaseKey(nil, 0)
 
 	assert.IsType(t, NilError(""), err)
@@ -244,7 +247,7 @@ func TestFibHeap_DecreaseKey_NilNode(t *testing.T) {
 
 func TestFibHeap_DecreaseKey_LargerNewPriority(t *testing.T) {
 	heap := NewFloatFibHeap()
-	node := heap.Enqueue(1)
+	node := heap.Enqueue(TestValue, 1)
 	min, err := heap.DecreaseKey(node, 20)
 
 	assert.EqualError(t, err, "The given new priority: 20, is larger than or equal to the old: 1")
@@ -256,13 +259,13 @@ func TestEnqueueDelete(t *testing.T) {
 	var e1, e2, e3 *Entry
 	for i := 0; i < len(NumberSequence2); i++ {
 		if NumberSequence2[i] == Seq2DecreaseKey1Orig {
-			e1 = heap.Enqueue(NumberSequence2[i])
+			e1 = heap.Enqueue(TestValue, NumberSequence2[i])
 		} else if NumberSequence2[i] == Seq2DecreaseKey2Orig {
-			e2 = heap.Enqueue(NumberSequence2[i])
+			e2 = heap.Enqueue(TestValue, NumberSequence2[i])
 		} else if NumberSequence2[i] == Seq2DecreaseKey3Orig {
-			e3 = heap.Enqueue(NumberSequence2[i])
+			e3 = heap.Enqueue(TestValue, NumberSequence2[i])
 		} else {
-			heap.Enqueue(NumberSequence2[i])
+			heap.Enqueue(TestValue, NumberSequence2[i])
 		}
 	}
 
@@ -290,7 +293,7 @@ func TestEnqueueDelete(t *testing.T) {
 func TestFibHeap_Delete_EmptyHeap(t *testing.T) {
 	heap := NewFloatFibHeap()
 
-	elem := heap.Enqueue(15)
+	elem := heap.Enqueue(TestValue, 15)
 	heap.DequeueMin()
 
 	// Heap should be empty at this point
@@ -301,7 +304,7 @@ func TestFibHeap_Delete_EmptyHeap(t *testing.T) {
 
 func TestFibHeap_Delete_NilNode(t *testing.T) {
 	heap := NewFloatFibHeap()
-	heap.Enqueue(1)
+	heap.Enqueue(TestValue, 1)
 	err := heap.Delete(nil)
 	assert.IsType(t, NilError(""), err)
 	assert.EqualError(t, err, "Cannot delete node: given node is nil")
@@ -310,12 +313,12 @@ func TestFibHeap_Delete_NilNode(t *testing.T) {
 func TestMerge(t *testing.T) {
 	heap1 := NewFloatFibHeap()
 	for i := 0; i < len(NumberSequence3); i++ {
-		heap1.Enqueue(NumberSequence3[i])
+		heap1.Enqueue(TestValue, NumberSequence3[i])
 	}
 
 	heap2 := NewFloatFibHeap()
 	for i := 0; i < len(NumberSequence4); i++ {
-		heap1.Enqueue(NumberSequence4[i])
+		heap1.Enqueue(TestValue, NumberSequence4[i])
 	}
 
 	heap, err := heap1.Merge(&heap2)
@@ -363,7 +366,7 @@ func BenchmarkFibHeap_Enqueue(b *testing.B) {
 	heap := NewFloatFibHeap()
 
 	for i := 0; i < b.N; i++ {
-		heap.Enqueue(2 * 1E10 * (rand.Float64() - 0.5))
+		heap.Enqueue(TestValue, 2*1E10*(rand.Float64()-0.5))
 	}
 }
 
@@ -376,7 +379,7 @@ func BenchmarkFibHeap_DequeueMin(b *testing.B) {
 	slice := make([]float64, 0, N)
 	for i := 0; i < N; i++ {
 		slice = append(slice, 2*1E10*(rand.Float64()-0.5))
-		heap.Enqueue(slice[i])
+		heap.Enqueue(TestValue, slice[i])
 	}
 
 	b.ResetTimer()
@@ -394,7 +397,7 @@ func BenchmarkFibHeap_DecreaseKey(b *testing.B) {
 	sliceE := make([]*Entry, 0, N)
 	for i := 0; i < N; i++ {
 		sliceFlt = append(sliceFlt, 2*1E10*(float64(i)-0.5))
-		sliceE = append(sliceE, heap.Enqueue(sliceFlt[i]))
+		sliceE = append(sliceE, heap.Enqueue(TestValue, sliceFlt[i]))
 	}
 
 	b.ResetTimer()
@@ -418,7 +421,7 @@ func BenchmarkFibHeap_Delete(b *testing.B) {
 	sliceE := make([]*Entry, 0, N)
 	for i := 0; i < N; i++ {
 		sliceFlt = append(sliceFlt, 2*1E10*(float64(i)-0.5))
-		sliceE = append(sliceE, heap.Enqueue(sliceFlt[i]))
+		sliceE = append(sliceE, heap.Enqueue(TestValue, sliceFlt[i]))
 	}
 
 	// Delete runs in log(N) time
@@ -436,8 +439,8 @@ func BenchmarkFibHeap_Merge(b *testing.B) {
 	heap2 := NewFloatFibHeap()
 
 	for i := 0; i < b.N; i++ {
-		heap1.Enqueue(2 * 1E10 * (rand.Float64() - 0.5))
-		heap2.Enqueue(2 * 1E10 * (rand.Float64() - 0.5))
+		heap1.Enqueue(TestValue, 2*1E10*(rand.Float64()-0.5))
+		heap2.Enqueue(TestValue, 2*1E10*(rand.Float64()-0.5))
 		_, err := heap1.Merge(&heap2)
 		assert.NoError(b, err)
 	}

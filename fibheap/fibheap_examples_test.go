@@ -14,15 +14,15 @@ func ExampleFloatingFibonacciHeap_Enqueue() {
 	heap := NewFloatFibHeap()
 	// The function returns a pointer
 	// to the node that contains the new value
-	node := heap.Enqueue(SomeNumber)
+	node := heap.Enqueue(TestValue, SomeNumber)
 	fmt.Println(node.Priority)
 	// Output: 15.5
 }
 
 func ExampleFloatingFibonacciHeap_Min() {
 	heap := NewFloatFibHeap()
-	heap.Enqueue(SomeNumber)
-	heap.Enqueue(SomeLargerNumber)
+	heap.Enqueue(TestValue, SomeNumber)
+	heap.Enqueue(TestValue, SomeLargerNumber)
 	min, _ := heap.Min()
 	fmt.Println(min.Priority)
 	// Output: 15.5
@@ -31,7 +31,7 @@ func ExampleFloatingFibonacciHeap_Min() {
 func ExampleFloatingFibonacciHeap_IsEmpty() {
 	heap := NewFloatFibHeap()
 	fmt.Printf("Empty before insert? %v\n", heap.IsEmpty())
-	heap.Enqueue(SomeNumber)
+	heap.Enqueue(TestValue, SomeNumber)
 	fmt.Printf("Empty after insert? %v\n", heap.IsEmpty())
 	// Output:
 	// Empty before insert? true
@@ -41,7 +41,7 @@ func ExampleFloatingFibonacciHeap_IsEmpty() {
 func ExampleFloatingFibonacciHeap_Size() {
 	heap := NewFloatFibHeap()
 	fmt.Printf("Size before insert: %v\n", heap.Size())
-	heap.Enqueue(SomeNumber)
+	heap.Enqueue(TestValue, SomeNumber)
 	fmt.Printf("Size after insert: %v\n", heap.Size())
 	// Output:
 	// Size before insert: 0
@@ -50,7 +50,7 @@ func ExampleFloatingFibonacciHeap_Size() {
 
 func ExampleFloatingFibonacciHeap_DequeueMin() {
 	heap := NewFloatFibHeap()
-	heap.Enqueue(SomeNumber)
+	heap.Enqueue(TestValue, SomeNumber)
 	node, _ := heap.DequeueMin()
 	fmt.Printf("Dequeueing minimal element: %v\n", node.Priority)
 	// Output:
@@ -59,7 +59,7 @@ func ExampleFloatingFibonacciHeap_DequeueMin() {
 
 func ExampleFloatingFibonacciHeap_DecreaseKey() {
 	heap := NewFloatFibHeap()
-	node := heap.Enqueue(SomeNumber)
+	node := heap.Enqueue(TestValue, SomeNumber)
 	min, _ := heap.Min()
 	fmt.Printf("Minimal element before decreasing key: %v\n", min.Priority)
 	heap.DecreaseKey(node, SomeSmallerNumber)
@@ -72,8 +72,8 @@ func ExampleFloatingFibonacciHeap_DecreaseKey() {
 
 func ExampleFloatingFibonacciHeap_Delete() {
 	heap := NewFloatFibHeap()
-	node := heap.Enqueue(SomeNumber)
-	heap.Enqueue(SomeLargerNumber)
+	node := heap.Enqueue(TestValue, SomeNumber)
+	heap.Enqueue(TestValue, SomeLargerNumber)
 	min, _ := heap.Min()
 	fmt.Printf("Minimal element before deletion: %v\n", min.Priority)
 	heap.Delete(node)
@@ -87,9 +87,9 @@ func ExampleFloatingFibonacciHeap_Delete() {
 func ExampleFloatingFibonacciHeap_Merge() {
 	heap1 := NewFloatFibHeap()
 	heap2 := NewFloatFibHeap()
-	heap1.Enqueue(SomeNumber)
-	heap1.Enqueue(SomeLargerNumber)
-	heap2.Enqueue(SomeSmallerNumber)
+	heap1.Enqueue(TestValue, SomeNumber)
+	heap1.Enqueue(TestValue, SomeLargerNumber)
+	heap2.Enqueue(TestValue, SomeSmallerNumber)
 	min, _ := heap1.Min()
 	fmt.Printf("Minimal element of heap 1: %v\n", min.Priority)
 	min, _ = heap2.Min()
